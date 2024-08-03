@@ -1,25 +1,23 @@
 extends CharacterBody2D
 
+@onready var tilemap = $"../TileMap"
+var current_path: Array[Vector2i]
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
-
-func _physics_process(delta):
-
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-
-	move_and_slide()
+func _physics_process(_delta):
+	if current_path.is_empty():
+		return
+		
+	var target_position = tilemap.map_to_local(current_path.front())
+	global_position = global_position.move_toward(target_position, 5)
+	
+	if global_position == target_position:
+		current_path.pop_front()
+		
+func _unhandled_input(event):
+	var click_position = get_global_mouse_position()
+	if tilemap.is_point_walkable(click_position):
+		if event.is_action_pressed("move_to"):
+			current_path = tilemap.astar.get_id_path(
+				tilemap.local_to_map(global_position),
+				tilemap.local_to_map(click_position)
+			).slice(1)
