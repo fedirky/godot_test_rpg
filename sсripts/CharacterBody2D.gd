@@ -9,6 +9,7 @@ func _physics_process(_delta):
 		
 	var target_position = tilemap.map_to_local(current_path.front())
 	global_position = global_position.move_toward(target_position, 5)
+	# TODO Add character movement from cell to cell "animations" here
 	# var tween = get_tree().create_tween()
 	# tween.interpolate_value(self, "global_position", global_position, target_position, 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 
