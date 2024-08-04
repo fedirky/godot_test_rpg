@@ -12,8 +12,8 @@ func _ready():
 	astar.region = map_rect
 	astar.cell_size = tile_size
 	astar.offset = tile_size * 0.5
-	astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_EUCLIDEAN
-	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_EUCLIDEAN
+	astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_CHEBYSHEV
+	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_CHEBYSHEV
 	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_AT_LEAST_ONE_WALKABLE
 	astar.update()
 	
