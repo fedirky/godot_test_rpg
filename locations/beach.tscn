@@ -34,10 +34,8 @@ radius = 35.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pt02u"]
 shader = ExtResource("6_mdet1")
-shader_parameter/line_color = Vector4(1, 1, 1, 1)
-shader_parameter/line_thickness = 10.0
-shader_parameter/frequency = 10.0
-shader_parameter/phase_speed = 1.0
+shader_parameter/dir = Vector2(0.05, 0.05)
+shader_parameter/quality = 1
 
 [sub_resource type="GDScript" id="GDScript_7t3k2"]
 script/source = "extends Label
@@ -69,7 +67,6 @@ one_way_collision_margin = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 material = SubResource("ShaderMaterial_pt02u")
-use_parent_material = true
 position = Vector2(1, 1)
 scale = Vector2(0.278, 0.278)
 texture = ExtResource("4_fs82e")
