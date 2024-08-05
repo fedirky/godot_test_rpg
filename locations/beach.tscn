@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cw4y3i5vf8kd1"]
+[gd_scene load_steps=11 format=3 uid="uid://cw4y3i5vf8kd1"]
 
 [ext_resource type="Texture2D" uid="uid://b8t4mxhjulwnf" path="res://assets/maps/beach.png" id="1_caaq7"]
+[ext_resource type="Shader" path="res://sсripts/shader.gdshader" id="1_vqfdf"]
 [ext_resource type="Texture2D" uid="uid://crs4tqfn7u3ud" path="res://assets/tilemap/passability.png" id="2_d1kmn"]
 [ext_resource type="Script" path="res://sсripts/CharacterBody2D.gd" id="3_3d8po"]
 [ext_resource type="Script" path="res://sсripts/TileMap.gd" id="3_ttsgu"]
@@ -22,6 +23,11 @@ custom_data_layer_0/name = "type"
 custom_data_layer_0/type = 4
 sources/1 = SubResource("TileSetAtlasSource_trgth")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xbxon"]
+shader = ExtResource("1_vqfdf")
+shader_parameter/dir = Vector2(0, 0)
+shader_parameter/quality = 4
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_ioqrw"]
 radius = 35.0
 
@@ -38,6 +44,7 @@ layer_0/tile_data = PackedInt32Array(65536, 1, 0, 0, 1, 0, 131072, 1, 0, 196608,
 script = ExtResource("3_ttsgu")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+material = SubResource("ShaderMaterial_xbxon")
 position = Vector2(35, 35)
 script = ExtResource("3_3d8po")
 
@@ -47,6 +54,14 @@ shape = SubResource("CircleShape2D_ioqrw")
 one_way_collision_margin = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+use_parent_material = true
 position = Vector2(1, 1)
 scale = Vector2(0.278, 0.278)
 texture = ExtResource("4_fs82e")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 544)
+ignore_rotation = false
+enabled = false
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
