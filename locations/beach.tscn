@@ -80,11 +80,12 @@ one_way_collision_margin = 0.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 544)
+position_smoothing_enabled = true
 script = ExtResource("9_ysjrc")
 
-[node name="Label" type="Label" parent="Camera2D"]
-offset_left = -960.0
-offset_top = -544.0
-offset_right = -920.0
-offset_bottom = -521.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
 script = SubResource("GDScript_7t3k2")
