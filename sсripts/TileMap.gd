@@ -33,3 +33,7 @@ func is_point_walkable(local_position):
 		return not astar.is_point_solid(map_position)
 	return false
 
+func get_tile_speed(local_position):
+	var map_position = local_to_map(local_position)
+	var tile_data = get_cell_tile_data(0, map_position)
+	return tile_data.get_custom_data('speed')
