@@ -3,7 +3,8 @@ extends CharacterBody2D
 @onready var tilemap = $"../TileMap"
 var current_path: Array[Vector2i] = []
 var current_tile: Vector2i
-var tile_speed: float = 0.0
+var tile_data:    TileData
+
 var self_speed: float = 1.0
 
 func _ready():
@@ -11,16 +12,18 @@ func _ready():
 		print("Error: TileMap not found")
 	else:
 		print("TileMap successfully loaded")
+		current_tile = tilemap.local_to_map(position)
+		tile_data = tilemap.get_cell_tile_data(0, current_tile)
 
 func _physics_process(delta):
 	if current_path.is_empty():
 		return
-
-	var target_position = tilemap.map_to_local(current_path.front())
-	update_tile_info(target_position)
-
-	global_position = global_position.move_toward(target_position, self_speed * tile_speed * delta)
 	
+	update_tile_info(position)
+	var target_position = tilemap.map_to_local(current_path.front())
+	global_position = global_position.move_toward(tilemap.map_to_local(current_path.front()), 
+												  self_speed * tile_data.get_custom_data("speed") * delta)
+
 	if global_position == target_position:
 		current_path.pop_front()
 
@@ -33,8 +36,8 @@ func _unhandled_input(event):
 				tilemap.local_to_map(click_position)
 			).slice(1)
 
-func update_tile_info(target_position):
-	var new_tile = tilemap.local_to_map(target_position)
-	if new_tile != current_tile:
+func update_tile_info(character_position):
+	var new_tile = tilemap.local_to_map(character_position)
+	if current_tile != new_tile:
 		current_tile = new_tile
-		tile_speed = tilemap.get_tile_speed(target_position)
+		tile_data = tilemap.get_cell_tile_data(0, current_tile)

@@ -3,6 +3,9 @@ extends TileMap
 var astar = AStarGrid2D.new()
 var map_rect = Rect2i()
 
+@export var map_limits: Array = [0, 0, 2100, 1121]
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var tile_size = get_tileset().tile_size

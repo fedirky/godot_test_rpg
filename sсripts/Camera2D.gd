@@ -1,7 +1,14 @@
 extends Camera2D
 
 var screen_edge_threshold = 20
-var max_speed = 400
+var max_speed = 256
+
+func _ready():
+	var limits = $"../TileMap".map_limits
+	limit_left   = limits[0]
+	limit_top    = limits[1]
+	limit_right  = limits[2]
+	limit_bottom = limits[3]
 
 func _process(delta):
 	var mouse_pos = get_viewport().get_mouse_position()
