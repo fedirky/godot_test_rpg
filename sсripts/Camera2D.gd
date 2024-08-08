@@ -1,19 +1,28 @@
 extends Camera2D
 
 var threshold_screen_edge = 20
-var speed_max = 256
+var speed_max = 400
 
 var left_limit
 var top_limit
 var right_limit
 var bottom_limit
 
+var cam_x
+var cam_y
+
 func _ready():
 	var limits = $"../TileMap".map_limits
-	left_limit = limits[0]
-	top_limit = limits[1]
-	right_limit = limits[2]
+	left_limit   = limits[0]
+	top_limit    = limits[1]
+	right_limit  = limits[2]
 	bottom_limit = limits[3]
+	# HACK Это какое-то пиво, но пока что сработает, наверное, я хз
+	var zoom_factor = get_viewport_rect().size.y / 1080
+	zoom.x = zoom_factor
+	zoom.y = zoom_factor
+	cam_x = (get_viewport_rect().size * 0.5).x / zoom_factor
+	cam_y = (get_viewport_rect().size * 0.5).y / zoom_factor
 
 func _process(delta):
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -33,8 +42,8 @@ func _process(delta):
 	global_position += move_vector * delta
 
 	# Ensure camera stays within limits
-	global_position.x = clamp(global_position.x, left_limit, right_limit)
-	global_position.y = clamp(global_position.y, top_limit, bottom_limit)
+	global_position.x = clamp(global_position.x, left_limit + cam_x, right_limit  - cam_x)
+	global_position.y = clamp(global_position.y, top_limit  + cam_y, bottom_limit - cam_y)
 
 
 '''
