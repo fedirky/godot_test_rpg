@@ -84,6 +84,7 @@ one_way_collision_margin = 0.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 544)
+zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 script = ExtResource("9_ysjrc")
 
